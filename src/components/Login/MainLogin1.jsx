@@ -161,7 +161,18 @@ export default function MainLogin1() {
             </label>
           </div>
         </div>
-        <button className="">Login</button>
+        <div className="grid grid-cols-1">
+          <div className="mt-[30px] w-full flex justify-center items-center ">
+            <button className="w-4/5 px-[6px] py-[3px] text-white -700 border font-mono text-2xl  bg-[rgb(235,138,31)] rounded-full">
+              Log in
+            </button>
+          </div>
+          <div className="mt-[25px] w-full flex justify-center items-center">
+            <button className="w-4/5 px-[6px] py-[1px] border border-[rgb(235,138,31)] font-mono text-[rgb(235,138,31)] text-2xl rounded-full">
+              Register
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );
