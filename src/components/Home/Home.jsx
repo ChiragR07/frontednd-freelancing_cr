@@ -4,6 +4,7 @@ import { SlVolume2 } from "react-icons/sl";
 import { AiOutlineFire } from "react-icons/ai";
 import WinningInformation from "./WinningInformation";
 import PodiumFinisher from "./PodiumFinishers";
+import { NavLink } from "react-router-dom";
 export default function Home() {
   return (
     <div>
@@ -53,16 +54,18 @@ export default function Home() {
         <div className="mt-[17px] mb-[10px] h-[150px] w-full">
           <div className=" flex">
             <div className="w-1/2 grid justify-center items-center">
-              <div className="flex justify-center items-center">
-                <div className="grid rounded-full bg-blue-700">
-                  <img
-                    src="https://ossimg.9987cw.cc/TC/gamecategory/gamecategory_20231215033613klhe.png"
-                    alt="firstGame"
-                    className="rounded-full w-fit"
-                  />
+              <NavLink to="gameFirst">
+                <div className="flex justify-center items-center">
+                  <div className="grid rounded-full bg-blue-700">
+                    <img
+                      src="https://ossimg.9987cw.cc/TC/gamecategory/gamecategory_20231215033613klhe.png"
+                      alt="firstGame"
+                      className="rounded-full w-fit"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="w-fit ml-[30px]">Lottery</div>
+                <div className="w-fit ml-[30px]">Lottery</div>
+              </NavLink>
             </div>
             <div className="w-1/2 grid justify-center items-center">
               <div className="flex justify-center items-center">
@@ -78,7 +81,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="w-full px-[13px]">
+        {/* <div className="w-full px-[13px]">
           <div>
             <div className="mb-4">
               <img
@@ -87,7 +90,6 @@ export default function Home() {
               />
             </div>
           </div>
-          {/* <div><div ><img src="https://ossimg.9987cw.cc/TC/gamelogo/CQ9/AB3.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/CQ9/AT01.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/CQ9/AT05.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/CQ9/GO02.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/7001.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/7002.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/7003.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/7004.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/7005.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/7006.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/7007.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/JDB/67001.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div><div data-v-80dcc128="" class="item"><img data-v-80dcc128="" src="https://ossimg.9987cw.cc/TC/gamelogo/V8Card/510.png" alt="" data-img="https://www.9987up.club/assets/png/avatar-5a79e664.png"></div></div> */}
           <div className="h-full w-full grid grid-cols-3 gap-4 ">
             <div className="p-1 bg-gradient-to-br from-yellow-600 to-yellow-300 rounded-lg">
               <img
@@ -181,7 +183,7 @@ export default function Home() {
               />
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="px-[13px] h-[384px] mt-3">
           <div className="mb-[13px] w-full border-l-2 border-[rgb(235,138,31)]">
             <h1 className="text-xl bold  pl-[10px]">Winning Information</h1>

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Navigation() {
   return (
-    <nav>
+    <nav className="">
       <ul>
         <li>
           <div className="fixed bottom-0 h-[74px] w-[400px]">

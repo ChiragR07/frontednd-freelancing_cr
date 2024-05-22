@@ -9,15 +9,11 @@ import Navigation from "./Navigation/Navigation";
 
 export default function Layout() {
   return (
-    <div className="flex justify-center bg-[#9195A3]">
-      <div className="relative w-[400px] bg-white">
-        {/* <Login /> */}
-        {/* <Home /> */}
-        {/* <Activity /> */}
-        {/* <Wallet /> */}
+    <div className="flex justify-center bg-[#9195A3] overflow-auto">
+      <div className="relative w-[400px] bg-white ">
         <Outlet />
-        {/* <Account /> */}
         <Navigation />
+        {/* <Login/> */}
       </div>
     </div>
   );
