@@ -2,20 +2,39 @@ import React, { useState } from "react";
 
 export default function SelectColor() {
   const [selectedColor, setSelectedColor] = useState("");
+  const [contractAmount, setContractAmount] = useState(10);
+  const [tokenCount, setTokenCount] = useState(1); // minimum number of tokens is 1
 
   const handleButtonClick = (color) => {
     setSelectedColor(color);
+    setContractAmount(10); // Reset contract amount to default
+    setTokenCount(1); // Reset token count to minimum 1
   };
 
   const closePopup = () => {
     setSelectedColor("");
   };
 
+  const increaseTokenCount = () => {
+    setTokenCount(tokenCount + 1);
+  };
+
+  const decreaseTokenCount = () => {
+    if (tokenCount > 1) {
+      // Ensure the minimum token count is 1
+      setTokenCount(tokenCount - 1);
+    }
+  };
+
+  const totalContractMoney = contractAmount * tokenCount;
+
   const colors = [
     { name: "Green", bgClass: "bg-green-600" },
     { name: "Violet", bgClass: "bg-violet-600" },
     { name: "Red", bgClass: "bg-red-600" },
   ];
+
+  const contractValues = [10, 100, 1000, 10000];
 
   return (
     <div>
@@ -45,41 +64,76 @@ export default function SelectColor() {
       </div>
       {selectedColor && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className=" h-[400px] w-[300px] bg-white rounded shadow-lg">
-            <div className={`h-[50px] w-full bg-green-600 p-3`}>
+          <div className="w-[300px] bg-white rounded-md shadow-lg">
+            <div
+              className={`h-[50px] w-full p-3 ${
+                colors.find((color) => color.name === selectedColor).bgClass
+              }`}
+            >
               <div className="h-full w-full text-white font-sans text-wrap text-lg flex items-center">
                 Join {selectedColor}
               </div>
             </div>
             <div className="p-3 h-full w-full">
-              <div className="w-full h-[20px] text-wrap text-xs">
+              <div className="w-full h-[20px] text-wrap text-sm font-sans p-1">
                 Contract Money
               </div>
               <div className="w-full h-[40px] mt-[8px]">
-                <ul className="w-fit h-full flex flex-row border-t-[1px] border-l-[1px] border-r-[1px] divide-x-[1px] hover:cursor-pointer rounded-md shadow-md text-[rgb(102,102,102)]">
-                  <li className="w-[30px] h-full flex items-center justify-center border-b-2 border-gray-300 ">
-                    10
-                  </li>
-                  <li className="w-[40px] h-full flex items-center justify-center border-b-2 border-gray-300">
-                    100
-                  </li>
-                  <li className="w-[50px] h-full flex items-center justify-center border-b-2 border-gray-300">
-                    1000
-                  </li>
-                  <li className="w-[60px] h-full flex items-center justify-center border-b-2 border-gray-300">
-                    10000
-                  </li>
+                <ul className="w-fit h-full flex flex-row border-t-[1px] border-l-[1px] border-r-[1px] divide-x-[1px] hover:cursor-pointer rounded-md shadow-md text-[rgb(102,102,102)] font-light">
+                  {contractValues.map((value) => (
+                    <li
+                      key={value}
+                      className={`w-[${
+                        30 + value / 10
+                      }px] h-full flex items-center justify-center border-b-2 border-gray-300 p-2 ${
+                        contractAmount === value ? "bg-gray-300" : ""
+                      }`}
+                      onClick={() => setContractAmount(value)}
+                    >
+                      {value}
+                    </li>
+                  ))}
                 </ul>
               </div>
+              <div className="w-full h-auto mt-[8px] text-sm font-sans text-wrap">
+                Number
+              </div>
+              <div className="mt-[8px] w-full h-fit flex justify-evenly p-2">
+                <button
+                  className="h-[35px] w-[40px] flex justify-center items-center rounded-md border-2 shadow-md"
+                  onClick={decreaseTokenCount}
+                >
+                  -
+                </button>
+                <div className="h-[35px] w-[40px] flex justify-center items-center rounded-md border-2 shadow-md">
+                  {tokenCount}
+                </div>
+                <button
+                  className="h-[35px] w-[40px] flex justify-center items-center rounded-md border-2 shadow-md"
+                  onClick={increaseTokenCount}
+                >
+                  +
+                </button>
+              </div>
+              <div className="w-full mt-[8px] text-sm font-light">
+                Total Contract Money is{" "}
+                <span className="font-bold text-[rgb(102,102,102)]">
+                  {totalContractMoney}
+                </span>
+              </div>
+              <div className="flex flex-row gap-2 mt-[12px]">
+                <input className="w-[15px]" type="checkbox"></input>
+                <label className="w-full text-wrap text-sm text-[rgb(102,102,102)]">
+                  I agree PRESALE RULE
+                </label>
+              </div>
+              <div className="flex flex-row gap-5 mt-[17px] justify-end text-[rgb(102,102,102)] p-1">
+                <button className="text-lg font-light" onClick={closePopup}>
+                  Cancel
+                </button>
+                <button className="text-lg font-light">Confirm</button>
+              </div>
             </div>
-
-            {/* <p className="text-lg font-bold">You selected {selectedColor}</p>
-            <button
-              className="mt-4 px-4 py-2 bg-gray-300 rounded"
-              onClick={closePopup}
-            >
-              Close
-            </button> */}
           </div>
         </div>
       )}
