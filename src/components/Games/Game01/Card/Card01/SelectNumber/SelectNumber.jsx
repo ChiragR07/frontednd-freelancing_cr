@@ -31,11 +31,11 @@ export default function SelectNumber() {
 
   return (
     <div>
-      <div className="text-[rgb(102,102,102)] mx-[10px] p-1 flex justify-start text-center mt-[8px] text-xs">
+      <div className="text-[rgb(102,102,102)] mx-[10px] p-1 flex justify-start text-center mt-[8px] text-xs ">
         Select a number
       </div>
-      <div className="w-full px-[12px]">
-        <div className="flex flex-col gap-3">
+      <div className="w-full px-[12px] ">
+        <div className="flex flex-col gap-3 mt-[8px]">
           <div className="flex flex-row gap-3">
             {[1, 2, 3, 4, 5].map((number) => (
               <button

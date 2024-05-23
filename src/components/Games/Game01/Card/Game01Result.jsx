@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
 
-const Game01Result = ({ data }) => {
+const Game01Result = ({ data, setData }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 8;
   const totalPages = Math.ceil(data.length / rowsPerPage);
