@@ -64,20 +64,20 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <div className="w-fit ml-[30px]">Lottery</div>
+                <div className="w-fit ml-[30px] text-md">Coloring</div>
               </NavLink>
             </div>
             <div className="w-1/2 grid justify-center items-center">
               <div className="flex justify-center items-center">
                 <div className="grid rounded-full bg-blue-700">
                   <img
-                    src="https://ossimg.9987cw.cc/TC/gamecategory/gamecategory_20231215033607yi17.png"
+                    src="https://ossimg.9987cw.cc/TC/gamelogo/TB_Chess/800.png"
                     alt="firstGame"
                     className="rounded-full w-fit"
                   />
                 </div>
               </div>
-              <div className="w-fit ml-[30px]">Football</div>
+              <div className="w-fit ml-[35px] ">Aviator</div>
             </div>
           </div>
         </div>

@@ -20,6 +20,7 @@ import Notification from "./components/Account/AllCards/Cards/Cards05/Notificait
 import About from "./components/Account/AllCards/Cards/Cards05/About/About";
 import Transactions from "./components/Account/AllCards/Cards/Cards03/Transaction/Transactions";
 import Game01 from "./components/Games/Game01/Game01";
+import Payment from "./components/Account/AllCards/Cards/Cards01/Deposite/Payment/Payment";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "gameFirst",
         element: <Game01 />,
+      },
+      {
+        path: "pay",
+        element: <Payment />,
       },
     ],
   },
