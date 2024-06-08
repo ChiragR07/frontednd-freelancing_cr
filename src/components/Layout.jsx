@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import Login from "./Login/Login";
+import Login from "./Authentication/Login/Login";
 import Home from "./Home/Home";
 import Activity from "./Activity/Activity";
 import Wallet from "./Wallet/Wallet";

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigation } from "react-router-dom";
+import { React, useState } from "react";
+import { useNavigation } from "react-router";
+import { FcInvite } from "react-icons/fc";
 
-export default function MainLogin() {
+export default function MainSignUp() {
   const [loginType, setLoginType] = useState("email");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const navigation = useNavigation();
+  const navigate = useNavigation();
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -34,13 +34,17 @@ export default function MainLogin() {
     setEmail(e.target.value);
   };
 
+  const handleRegister = () => {
+    navigate("/login");
+  };
+
   const handleLogin = () => {
     // Example Axios request to backend for authentication
     axios
-      .post("/api/login", { loginType, phoneNumber, password, email })
+      .post("/api/signup", { loginType, phoneNumber, password, email })
       .then((response) => {
         // Assuming successful login, navigate to "/home"
-        navigation.navigate("/home");
+        navigate("/home");
       })
       .catch((error) => {
         console.error("Login failed:", error);
@@ -49,7 +53,7 @@ export default function MainLogin() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#f2f3f5]">
+    <div className="min-w-full  bg-[#f2f3f5] ">
       <div className="flex justify-around px-5">
         <div
           className={`grid justify-items-center gap-y-2 py-2 w-1/2 border-b-2 ${
@@ -64,7 +68,9 @@ export default function MainLogin() {
               className="h-[26px] flex justify-center items-center"
             />
           </div>
-          <div className="h-fit w-fit text-base">Log in with phone</div>
+          <div className="h-fit w-fit text-base font-bold text-gray-500">
+            Register your phone
+          </div>
         </div>
         <div
           className={`grid justify-items-center gap-y-2 py-2 w-1/2 border-b-2 ${
@@ -79,10 +85,10 @@ export default function MainLogin() {
               className="h-[26px]"
             />
           </div>
-          <div>Email Login</div>
+          <div className="text-gray-500 font-bold">Email Registration</div>
         </div>
       </div>
-      <form className="h-full w-full my-[28px] px-[21px]">
+      <form className="h-full w-full my-[28px] px-[21px] mb-[70px] ">
         <div className="mb-8">
           <div className="flex mb-[12px]">
             <div>
@@ -141,14 +147,14 @@ export default function MainLogin() {
                 className="mr-[6px] h-[25px] flex justify-center items-baseline"
               />
             </div>
-            <span className="w-fit h-fit text-[#666666]">Password</span>
+            <span className="w-fit h-fit text-[#666666]">Enter Full Name</span>
           </div>
           <div>
             <div className="w-full flex items-center gap-x-3 text-[#888888]">
               <div className="w-full z-10 p-1">
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder="Enter full name"
                   className="w-full bg-[rgb(255,255,255)] px-[11px] py-[12px] border-solid border-[rgb(136,136,136)] rounded-lg shadow-lg"
                   onChange={handlePasswordChange}
                   value={password}
@@ -157,6 +163,7 @@ export default function MainLogin() {
             </div>
           </div>
         </div>
+
         <div>
           <div className="flex items-center">
             <div
@@ -178,7 +185,8 @@ export default function MainLogin() {
               htmlFor="remember-password"
               className=" text-[#888888] text-sm"
             >
-              Remember Password
+              I have read and agree{" "}
+              <span className="text-red-500 "> [Privacy Agreement]</span>
             </label>
           </div>
         </div>
@@ -188,12 +196,15 @@ export default function MainLogin() {
               className="w-4/5 px-[6px] py-[3px] text-white -700 border font-mono text-2xl  bg-[rgb(235,138,31)] rounded-full"
               onClick={handleLogin}
             >
-              Log in
+              Register
             </button>
           </div>
-          <div className="mt-[25px] w-full flex justify-center items-center">
-            <button className="w-4/5 px-[6px] py-[1px] border border-[rgb(235,138,31)] font-mono text-[rgb(235,138,31)] text-2xl rounded-full">
-              Register
+          <div className="mt-[25px] w-full flex justify-center items-center ">
+            <button
+              className="w-4/5 px-[6px] py-[1px] border border-[rgb(235,138,31)] font-mono text-gray-500 text-md rounded-full"
+              onClick={handleRegister}
+            >
+              I have an account <span className="text-orange-500">Login</span>
             </button>
           </div>
         </div>

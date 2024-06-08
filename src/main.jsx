@@ -21,6 +21,9 @@ import About from "./components/Account/AllCards/Cards/Cards05/About/About";
 import Transactions from "./components/Account/AllCards/Cards/Cards03/Transaction/Transactions";
 import Game01 from "./components/Games/Game01/Game01";
 import Payment from "./components/Account/AllCards/Cards/Cards01/Deposite/Payment/Payment";
+import AdminDashboard from "./components/Admin/AdminDashboard";
+import Login from "./components/Authentication/Login/Login";
+import SignUp from "./components/Authentication/SignUp/SignUp";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -100,6 +103,18 @@ const router = createBrowserRouter([
         element: <Payment />,
       },
     ],
+  },
+  {
+    path: "/admin-dashboard",
+    element: <AdminDashboard />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signUp",
+    element: <SignUp />,
   },
 ]);
 

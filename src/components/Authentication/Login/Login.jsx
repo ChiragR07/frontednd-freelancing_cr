@@ -1,5 +1,5 @@
 import React from "react";
-import backIcon from "../../../public/backIcon_1.png";
+import backIcon from "../../../../public/backIcon_1.png";
 import MainLogin from "./MainLogin.jsx";
 
 export default function Login() {

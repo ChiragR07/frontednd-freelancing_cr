@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function SelectColor() {
   const [selectedColor, setSelectedColor] = useState("");
@@ -24,6 +25,25 @@ export default function SelectColor() {
       // Ensure the minimum token count is 1
       setTokenCount(tokenCount - 1);
     }
+  };
+
+  const handleConfirm = () => {
+    const data = {
+      selectedColor,
+      contractAmount,
+      tokenCount,
+      totalContractMoney: contractAmount * tokenCount,
+    };
+
+    axios
+      .post("/api/confirm", data)
+      .then((response) => {
+        console.log("Data sent successfully:", response.data);
+        closePopup();
+      })
+      .catch((error) => {
+        console.error("There was an error sending the data:", error);
+      });
   };
 
   const totalContractMoney = contractAmount * tokenCount;
@@ -131,7 +151,9 @@ export default function SelectColor() {
                 <button className="text-lg font-light" onClick={closePopup}>
                   Cancel
                 </button>
-                <button className="text-lg font-light">Confirm</button>
+                <button className="text-lg font-light" onClick={handleConfirm}>
+                  Confirm
+                </button>
               </div>
             </div>
           </div>
