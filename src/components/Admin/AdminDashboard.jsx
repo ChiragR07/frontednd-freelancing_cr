@@ -13,6 +13,7 @@ export default function AdminDashboard() {
     { label: "Aviator", to: "/aviator-game" },
   ];
 
+  
   return (
     <main className="h-screen w-full bg-slate-50">
       <nav className="flex justify-between px-8 items-center py-6 lg:px-24">
