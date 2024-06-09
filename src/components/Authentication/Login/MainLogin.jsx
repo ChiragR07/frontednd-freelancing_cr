@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Dialog from "../ErrorHandler/Dialog";
 
 export default function MainLogin() {
   const [loginType, setLoginType] = useState("email");
@@ -8,6 +9,8 @@ export default function MainLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [dialog, setDialog] = useState({ open: false, message: '', status: null });
+
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     name: "",
@@ -53,17 +56,62 @@ export default function MainLogin() {
     key: "value",
   };
 
-  const handleLogin = () => {
-    // Example Axios request to backend for authentication
-    axios
-      .post(import.meta.env.VITE_API_KEY + "auth/login", bodyParameters, config)
-      .then(function (response) {
-        setUserData(response.user.payload);
-        localStorage.setItem("accessToken", response.data.accessToken); // Assuming response contains accessToken
-        console.log(response);
-      })
-      .catch(console.log);
+  const handleCloseDialog = () => {
+    setDialog({ open: false, message: '', status: null });
   };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(import.meta.env.VITE_API_KEY + "auth/login", bodyParameters, config);
+
+      switch (response.status) {
+        case 200:
+          setDialog({ open: true, message: 'Login successful!', status: 200 });
+          setUserData(response.user.payload);
+          localStorage.setItem("accessToken", response.data.accessToken); // Assuming response contains accessToken
+          console.log(response);
+          break;
+        case 400:
+          setDialog({open:true, message:'Our Mistake! Please try again', status: 400});
+          break;
+        case 404:
+          setDialog({open: true, message: 'User Not Found', status: 404});
+          break;
+        case 401:
+          setDialog({ open: true, message: 'Unauthorized. Please check your credentials.', status: 401 });
+          break;
+        case 500:
+          setDialog({ open: true, message: 'Server error. Please try again later.', status: 500 });
+          break;
+        default:
+          setDialog({ open: true, message: `Unexpected error: ${response.status}`, status: response.status });
+      }
+    } catch (error) {
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        setDialog({ open: true, message: `Error: ${error.response.data.message}`, status: error.response.status });
+      } else if (error.request) {
+        // Request was made but no response received
+        setDialog({ open: true, message: 'Network error. Please check your connection.', status: null });
+      } else {
+        // Something else happened
+        setDialog({ open: true, message: `Error: ${error.message}`, status: null });
+      }
+    }
+  };
+
+  // const handleLogin = () => {
+  //   // Example Axios request to backend for authentication
+  //   axios
+  //     .post(import.meta.env.VITE_API_KEY + "auth/login", bodyParameters, config)
+  //     .then(function (response) {
+  //       setUserData(response.user.payload);
+  //       localStorage.setItem("accessToken", response.data.accessToken); // Assuming response contains accessToken
+  //       console.log(response);
+  //     })
+  //     .catch(console.log);
+  // };
 
   return (
     <div className="h-screen w-full bg-[#f2f3f5]">
@@ -182,6 +230,11 @@ export default function MainLogin() {
             Don't have an account? Sign up
           </button>
         </div>
+        <Dialog 
+        open={dialog.open} 
+        message={dialog.message} 
+        onClose={handleCloseDialog} 
+      />
       </div>
     </div>
   );
