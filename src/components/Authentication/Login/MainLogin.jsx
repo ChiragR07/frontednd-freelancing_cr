@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MainLogin() {
   const [loginType, setLoginType] = useState("email");
@@ -8,13 +8,15 @@ export default function MainLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const navigate = useNavigation();
-  const userData = {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
     name: "",
     userId: "",
     phone: "",
     avatar: "",
-  };
+  });
+  const token = ""; // Add the token value here
+
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
   };
@@ -42,24 +44,22 @@ export default function MainLogin() {
   const handleRegister = () => {
     navigate("signUp");
   };
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
+
   const bodyParameters = {
     key: "value",
   };
+
   const handleLogin = () => {
     // Example Axios request to backend for authentication
-
     axios
-      .post(
-        "http://localhost:8000/api/v1/get_token_payloads",
-        bodyParameters,
-        config
-      )
+      .post(import.meta.env.VITE_API_KEY + "auth/login", bodyParameters, config)
       .then(function (response) {
-        userData = response.user.payload;
-        accessToken = localStorage.setItem("accessToken");
+        setUserData(response.user.payload);
+        localStorage.setItem("accessToken", response.data.accessToken); // Assuming response contains accessToken
         console.log(response);
       })
       .catch(console.log);
@@ -91,133 +91,98 @@ export default function MainLogin() {
         >
           <div>
             <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAANHSURBVHgB7VnLjeJAFGw8EoIbIRDCTAS7ZLBEMBDB4gu/C3Dge4GNgNkIYCNAG8EQAhksJ0BIwFZZbtQ2BrfNzyO5JDTd7W5c1Z9XrxkhYsSIESPGFUjIQrfbbSYSiXcUsyLCOBwOc/z5U6vVmqwb8sHLy8sUAjIi4jAMI0uusp7o9Xrj9XpttlqtJVYhCxEzEd1VWGAFcpj9BblCzE+uQCGVSs0ajUaGD9iBHUX04CDPiUa9ZG0hVF7dItA2FxEB9z12yRu5DQaDV3WXHM+AW0QymaSIqXg+PjabTY5bnOQhxrHFeQYOam+qlQNY7/f7Qy6VeALw3hEm02QZ26aACR27+xjuBnUlWK9UKibamuLB4DsleUxiyYs8YZwZ7BbRerCIEt/JAv0JKzE819E498BLBL6oiPaluBP43fgUqtXqL9axvUeoNy6OcZ8BN9xnggdpv99PxI29wiafK5fLc04aJm9kZwYXYWh8sWMl+II7eMUCk/KmkJ/pkCd8BRBuETc2PIdBpdPpT75Pd7CWAOKciGsMTzWosGmMtgDCSwQND0R+i+BwGFTYHMz3EHvBfbAJxOoG2pua41WD+o6kbIK2UJlwoBWQ4Epgr07UNl2vUA3KImAYw7DkrfEiJPDipruNIhBNzAvDjgYlYedcoc9RWAElhLy/skKr73Q6P1iu1+uM33nV8NwGxf7tdtuKNKZpLq8REVgAt4AkQkir5z6GCCvpwyzzdifD7IJltFkHne5q95/dQkSgQ0zy6haw79EOqwe5lryvqvByV/TlKllhlPXhcJjZbre8qNzeB4APP/IE2/hMnJI/cVfewRk+6QGsh1kJLQEMm9g2RYV84VKSxWe8R9h9/dw1e40IHQELxnzhJD/2G8RLEET8w17/FP4GFVqEnwArXZCGpUtegvE9QIw/EYGQnBc++dYlAccki5Wg5EPCIUInaTx3I1ti6fMPJi8RSISngN1uV2RuzvKDyUtoi/C61DfhptbPKU8iL6ElwiFANaonk5fwFXEUwBQ3YuQlLoqQPy1OZYprXy6iQl7CUwQ+0wQdc7VatdSf7q7Jz+8MR2gnjv/g+ALkJRwi1DPwbmeHUccCHvVNxIgRI0Yk8B/jXmlqMD7YrgAAAABJRU5ErkJggg=="
-              alt="Email Login"
-              className="h-[26px]"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAANHSURBVHgB7VnLjeJAFGw8EoIbIRDCTAS7ZLBEMBDB4gu/C3Dge4GNgNkIYCNAG8EQAhksJ0BIwFZZbtQ2BrfNzyO5JDTd7W5c1Z9XrxkhYsSIESPGFUjIQrfbbSYSiXcUsyLCOBwOc/z5U6vVmqwb8sHLy8sUAjIi4jAMI0uusp7o9Xrj9XpttlqtJVYhCxEzEd1VWGAFcpj9BblCzE+uQCGVSs0ajUaGD9iBHUX04CDPiUa9ZG0hVF7dItA2FxEB9z12yRu5DQaDV3WXHM+AW0QymaSIqXg+PjabTY5bnOQhxrHFeQYOam+qlQNY7/f7Qy6VeALw3hEm02QZ26aACR27+xjuBnUlWK9UKibamuLB4DsleUxiyYs8YZwZ7BbRerCIEt/JAv0JKzE819E498BLBL6oiPaluBP43fgUqtXqL9axvUeoNy6OcZ8BN9xnggdpv99PxI29wiafK5fLc04aJm9kZwYXYWh8sWMl+II7eMUCk/KmkJ/pkCd8BRBuETc2PIdBpdPpT75Pd7CWAOKciGsMTzWosGmMtgDCSwQND0R+i+BwGFTYHMz3EHvBfbAJxOoG2pua41WD+o6kbIK2UJlwoBWQ4Epgr07UNl2vUA3KImAYw7DkrfEiJPDipruNIhBNzAvDjgYlYedcoc9RWAElhLy/skKr73Q6P1iu1+uM33nV8NwGxf7tdtuKNKZpLq8REVgAt4AkQkir5z6GCCvpwyzzdifD7IJltFkHne5q95/dQkSgQ0zy6haw79EOqwe5lryvqvByV/TlKllhlPXhcJjZbre8qNzeB4APP/IE2/hMnJI/cVfewRk+6QGsh1kJLQEMm9g2RYV84VKSxWe8R9h9/dw1e40IHQELxnzhJD/2G8RLEET8w17/FP4GFVqEnwArXZCGpUtegvE9QIw/EYGQnBc++dYlAccki5Wg5EPCIUInaTx3I1ti6fHn+OknqMPaJgXfGJsv4syvxWq1WgnwOF2DJ2BHAw3AAAAAElFTkSuQmCC"
+              alt="login with email"
+              className="h-[26px] flex justify-center items-center"
             />
           </div>
-          <div>Email Login</div>
+          <div className="h-fit w-fit text-base">Log in with email</div>
         </div>
       </div>
-      <form className="h-full w-full my-[28px] px-[21px]">
-        <div className="mb-8">
-          <div className="flex mb-[12px]">
+      <div className="py-3 mx-4">
+        <form>
+          {loginType === "phone" ? (
             <div>
-              <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGeSURBVHgB7dm9SgNBEAfwmU0CkkIEjSJEOdHCzl4bwTZC3kDshdjEj8qkUYMK4hPkHbQUzCMkneURFMFok0IUvV33RDudW8heBmF+EFLsBOafux2OWwAhBoKuhS8XC8X+68dKxpgipChCvMvnR65Ht26fXeqdAvSO59ZBmRIMk9ZXhb3uZVJZYgCW5n84hFDUYv9wcZyt+ZhSpfuz+RmyhFp8z72tAbNcFC1T62QArYFMPwyo6KFBBvgPJAA3CcBNAnCTANwkADcJwE0CcJMA3CSAGBD5XujpNCiDhjFgZBDCQjVs/bWeJX9sTMV+rQKv1vfnV7KJuWXBJ8SWMRCSJRDvKVMGT7wFQMDmRDXcdKl9bMw2EXEDPPB2C9l/vuNai0q1wRN/VwBNpXcSJDaG8Vi2082AH94C2IYC29hNYp3zmZAbGaPcyABo0HljpsU+DZA90AccAE1gFkXqnFonA0zuhG276+rARBtTn94PQ6rG7Zi1EdTs/XQAQxQ3P7XbrSXVOQ+1h6MgyKDexoxaghSZSHfs6WTz6+oLkb5POch2V1RS234AAAAASUVORK5CYII="
-                alt="input phone number"
-                className="mr-[6px] h-[25px] flex justify-center items-baseline"
-              />
-            </div>
-            <span className="w-fit h-fit text-[#666666]">
-              {loginType === "phone" ? "Phone number" : "Email"}
-            </span>
-          </div>
-          <div>
-            <div className="relative w-full flex items-center gap-x-3 text-[#888888] p-1">
-              {loginType === "phone" ? (
-                <div className="w-1/3">
-                  <select
-                    className="h-full w-full px-[13px] py-[14px] text-base border-solid border-[rgb(136,136,136)] rounded-lg z-10 shadow-lg"
-                    onChange={handlePhoneNumberChange}
-                    value={phoneNumber}
-                  >
-                    <option value="+91">+91</option>
-                    <option value="+971">+971</option>
-                    <option value="+972">+972</option>
-                    <option value="+92">+92</option>
-                  </select>
-                </div>
-              ) : null}
-              <div className="w-full z-10 p-1 ">
+              <label htmlFor="phone" className="font-medium text-gray-500">
+                Phone Number
+              </label>
+              <div className="border rounded-lg bg-white mt-2">
                 <input
-                  type={loginType === "phone" ? "text" : "email"}
-                  placeholder={
-                    loginType === "phone" ? "Enter phone number" : "Enter email"
-                  }
-                  className={`w-full bg-[rgb(255,255,255)] px-[13px] py-[14px] border-solid border-[rgb(136,136,136)] rounded-lg shadow-lg  ${
-                    loginType === "email" ? " " : ""
-                  }`}
-                  onChange={
-                    loginType === "phone"
-                      ? handlePhoneNumberChange
-                      : handleEmailChange
-                  }
-                  value={loginType === "phone" ? phoneNumber : email}
+                  type="tel"
+                  name="phone"
+                  id="phone"
+                  placeholder="Enter your phone number"
+                  value={phoneNumber}
+                  onChange={handlePhoneNumberChange}
+                  className="px-3 py-2 w-full"
                 />
               </div>
             </div>
-          </div>
-        </div>
-        <div className="mb-8">
-          <div className="flex mb-[12px]">
+          ) : (
             <div>
-              <img
-                src="https://www.9987up.club/assets/png/password-c9fb65d7.png"
-                alt="input phone number"
-                className="mr-[6px] h-[25px] flex justify-center items-baseline"
-              />
-            </div>
-            <span className="w-fit h-fit text-[#666666]">Password</span>
-          </div>
-          <div>
-            <div className="w-full flex items-center gap-x-3 text-[#888888]">
-              <div className="w-full z-10 p-1">
+              <label htmlFor="email" className="font-medium text-gray-500">
+                Email Address
+              </label>
+              <div className="border rounded-lg bg-white mt-2">
                 <input
-                  type="password"
-                  placeholder="Password"
-                  className="w-full bg-[rgb(255,255,255)] px-[11px] py-[12px] border-solid border-[rgb(136,136,136)] rounded-lg shadow-lg"
-                  onChange={handlePasswordChange}
-                  value={password}
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={handleEmailChange}
+                  className="px-3 py-2 w-full"
                 />
               </div>
             </div>
-          </div>
-        </div>
-        <div>
-          <div className="flex items-center">
-            <div
-              className={`w-6 h-6 border rounded-full flex justify-center items-center border-gray-400 mr-3 cursor-pointer ${
-                isChecked ? "bg-orange-500 border-orange-500" : ""
-              }`}
-              onClick={toggleCheckbox}
-            >
-              {isChecked && (
-                <svg
-                  className="w-4 h-4 text-white fill-current"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-                </svg>
-              )}
+          )}
+          <div className="mt-4">
+            <label htmlFor="password" className="font-medium text-gray-500">
+              Password
+            </label>
+            <div className="border rounded-lg bg-white mt-2">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={handlePasswordChange}
+                className="px-3 py-2 w-full"
+              />
             </div>
-            <label
-              htmlFor="remember-password"
-              className=" text-[#888888] text-sm"
-            >
-              Remember Password
+          </div>
+          <div className="mt-4 flex items-center">
+            <input
+              type="checkbox"
+              id="checkbox"
+              checked={isChecked}
+              onChange={toggleCheckbox}
+              className="mr-2"
+            />
+            <label htmlFor="checkbox" className="text-sm text-gray-500">
+              Remember me
             </label>
           </div>
-        </div>
-        <div className="grid grid-cols-1">
-          <div className="mt-[30px] w-full flex justify-center items-center ">
+          <div className="mt-6">
             <button
-              className="w-4/5 px-[6px] py-[3px] text-white -700 border font-mono text-2xl  bg-[rgb(235,138,31)] rounded-full"
+              type="button"
               onClick={handleLogin}
+              className="bg-orange-500 text-white w-full py-2 rounded-lg hover:bg-orange-600 transition duration-300"
             >
-              Log in
+              Log In
             </button>
           </div>
-          <div className="mt-[25px] w-full flex justify-center items-center">
-            <button
-              className="w-4/5 px-[6px] py-[1px] border border-[rgb(235,138,31)] font-mono text-[rgb(235,138,31)] text-2xl rounded-full"
-              onClick={handleRegister}
-            >
-              Register
-            </button>
-          </div>
+        </form>
+        <div className="mt-4 text-center">
+          <button
+            onClick={handleRegister}
+            className="text-orange-500 hover:underline"
+          >
+            Don't have an account? Sign up
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
